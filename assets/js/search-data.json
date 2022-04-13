@@ -1,0 +1,884 @@
+{"0": {
+    "doc": "Android debug bridge (adb)",
+    "title": "Android debug bridge (adb)",
+    "content": "# list all connected devices adb devices # list all reverse adb reverse --list # set revers for specific device # https://blog.usejournal.com/adb-port-forwarding-and-reversing-d2bc71835d43 adb -s emulator-5554 reverse tcp:3000 tcp:3000 # show logs adb -s emulator-5554 logcat *:S ReactNative:V ReactNativeJS:V # install apk adb -s emulator-5554 install myapp.apk . ",
+    "url": "/docs/cheatSheets/adb-cli.html",
+    "relUrl": "/docs/cheatSheets/adb-cli.html"
+  },"1": {
+    "doc": "Encode and decode base64",
+    "title": "Encode and decode base64",
+    "content": "# base64 encoded echo -n 'input' | openssl base64 # =&gt; aW5wdXQ= # base64 decode echo 'aW5wdXQ=' | base64 --decode # =&gt; input . ",
+    "url": "/docs/base64-encode-decode-cli.html",
+    "relUrl": "/docs/base64-encode-decode-cli.html"
+  },"2": {
+    "doc": "URL to open chrome remote dev tools",
+    "title": "URL to open chrome remote dev tools",
+    "content": "Connect an android mobile device to your computer and enabled debug mode on android device. Chrome will discover all remote available browser dev tools. chrome://inspect/#devices . ",
+    "url": "/docs/chrome-dev-tool.html",
+    "relUrl": "/docs/chrome-dev-tool.html"
+  },"3": {
+    "doc": "Disable ssh root login",
+    "title": "Disable ssh root login",
+    "content": "If you want to prohibit direct SSH root login under Debian, you need at least one other user besides the root user who is allowed to log in to the server. With this user you then switch to the root account. ATTENTION: If you have not created another user, you lock yourself out of the system! . ",
+    "url": "/docs/disable-ssh-root-.html",
+    "relUrl": "/docs/disable-ssh-root-.html"
+  },"4": {
+    "doc": "Disable ssh root login",
+    "title": "PermitRootLogin no",
+    "content": "Edit the file /etc/ssh/sshd_config and set . PermitRootLogin yes . to . PermitRootLogin no . Then restart the SSH service . /etc/init.d/ssh restart (alternatively: service ssh restart) . Now user root is no longer allowed to log in directly to the system. You log in normally with a user and then switch with su to the root account. ",
+    "url": "/docs/disable-ssh-root-.html#permitrootlogin-no",
+    "relUrl": "/docs/disable-ssh-root-.html#permitrootlogin-no"
+  },"5": {
+    "doc": "Disable ssh root login",
+    "title": "AllowGroups",
+    "content": "With the AllowGroups parameter you can additionally limit which users are allowed to log in via SSH. Excerpt from man sshd_config: . AllowGroups . This keyword can be followed by a list of group name patterns, separated by spaces. If specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns. Only group names are valid; a numerical group ID is not recognized. By default, login is allowed for all groups. The allow/deny directives are processed in the following order: DenyUsers, AllowUsers, DenyGroups, and finally AllowGroups. To create a group named sshusers and add a user to this group, run the following commands as the root user: . addgroup --system sshusers adduser xyz sshusers . Then configure the following options in /etc/ssh/sshd_config: . LoginGraceTime 30 AllowGroups sshusers PermitRootLogin no StrictModes yes . Then restart the SSH service: /etc/init.d/ssh restart . ",
+    "url": "/docs/disable-ssh-root-.html#allowgroups",
+    "relUrl": "/docs/disable-ssh-root-.html#allowgroups"
+  },"6": {
+    "doc": "Docker cli commands",
+    "title": "Docker cli commands",
+    "content": "# This one is particularly interesting, removes all the images that are not tagged `&lt;none&gt;` docker rmi $(docker images -q -f dangling=true) -- force # It is like the above command, only with grep docker images | grep SEARCH_STRING | awk '{print $3}' | sort -u | xargs docker rmi --force # List all containers, includes also detached containers docker ps -a . ",
+    "url": "/docs/cheatSheets/docker-cli.html",
+    "relUrl": "/docs/cheatSheets/docker-cli.html"
+  },"7": {
+    "doc": "Enable insecure registry",
+    "title": "Enable insecure registry",
+    "content": "sudo nano /etc/docker/daemon.json . ",
+    "url": "/docs/docker-enable-insecure-registry.html",
+    "relUrl": "/docs/docker-enable-insecure-registry.html"
+  },"8": {
+    "doc": "Enable insecure registry",
+    "title": "If the file does not exist, create it and insert",
+    "content": "{ \"insecure-registries\" : [\"&lt;IP&gt;:&lt;PORT&gt;\"] } . ",
+    "url": "/docs/docker-enable-insecure-registry.html#if-the-file-does-not-exist-create-it-and-insert",
+    "relUrl": "/docs/docker-enable-insecure-registry.html#if-the-file-does-not-exist-create-it-and-insert"
+  },"9": {
+    "doc": "Enable insecure registry",
+    "title": "Restart docker",
+    "content": "sudo systemctl restart docker . ",
+    "url": "/docs/docker-enable-insecure-registry.html#restart-docker",
+    "relUrl": "/docs/docker-enable-insecure-registry.html#restart-docker"
+  },"10": {
+    "doc": "Enable remote API for dockerd",
+    "title": "Enable remote API for dockerd",
+    "content": " ",
+    "url": "/docs/docker-enable-remote-api.html",
+    "relUrl": "/docs/docker-enable-remote-api.html"
+  },"11": {
+    "doc": "Enable remote API for dockerd",
+    "title": "Overview",
+    "content": "The best way to include the required startup options without editing the systemd unit file in place is to use a systemd drop-in file. ",
+    "url": "/docs/docker-enable-remote-api.html#overview",
+    "relUrl": "/docs/docker-enable-remote-api.html#overview"
+  },"12": {
+    "doc": "Enable remote API for dockerd",
+    "title": "Resolution",
+    "content": "After completing these steps, you will have enabled the remote API for dockerd, without editing the systemd unit file in place: . Create a file at /etc/systemd/system/docker.service.d/startup_options.conf with the below contents: . # /etc/systemd/system/docker.service.d/override.conf [Service] ExecStart= ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 . Note: The -H flag binds dockerd to a listening socket, either a Unix socket or a TCP port. You can specify multiple -H flags to bind to multiple sockets/ports. The default -H fd:// uses systemd’s socket activation feature to refer to /lib/systemd/system/docker.socket. Reload the unit files . sudo systemctl daemon-reload . Restart the docker daemon with new startup options: . sudo systemctl restart docker.service . Ensure that anyone that has access to the TCP listening socket is a trusted user since access to the docker daemon is root-equivalent. https://docs.docker.com/engine/security/ . ",
+    "url": "/docs/docker-enable-remote-api.html#resolution",
+    "relUrl": "/docs/docker-enable-remote-api.html#resolution"
+  },"13": {
+    "doc": "Enable remote API for dockerd",
+    "title": "Resources",
+    "content": ". | https://success.docker.com/article/how-do-i-enable-the-remote-api-for-dockerd | . ",
+    "url": "/docs/docker-enable-remote-api.html#resources",
+    "relUrl": "/docs/docker-enable-remote-api.html#resources"
+  },"14": {
+    "doc": "Setup docker in docker",
+    "title": "Setup docker in docker",
+    "content": "Example for jenkins . Description on dockerhub . docker container run --name jenkins-docker --rm --detach \\ --privileged --network jenkins --network-alias docker \\ --env DOCKER_TLS_CERTDIR=/certs \\ --volume jenkins-docker-certs:/certs/client \\ --volume jenkins-data:/var/jenkins_home \\ --volume \"$HOME\":/home docker:dind docker container run --name jenkins-tutorial --rm --detach \\ --network jenkins --env DOCKER_HOST=tcp://docker:2376 \\ --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \\ --volume jenkins-data:/var/jenkins_home \\ --volume jenkins-docker-certs:/certs/client:ro \\ --volume \"$HOME\":/home --publish 8080:8080 jenkinsci/blueocean . version: '2.0' services: docker: privileged: yes environment: DOCKER_TLS_CERTDIR: \"/certs\" volumes: - docker-data:/var/lib/docker - certs:/certs/client image: docker:dind docker-client: environment: DOCKER_HOST: tcp://ADD_IP_HERE:2376 DOCKER_CERT_PATH: \"/certs/client\" DOCKER_TLS_VERIFY: 1 volumes: - certs:/certs/client:ro image: jenkinsci/blueocean volumes: docker-data: certs: . ",
+    "url": "/docs/docker-in-docker.html",
+    "relUrl": "/docs/docker-in-docker.html"
+  },"15": {
+    "doc": "C# Console App with DI",
+    "title": "C# Console App with DI",
+    "content": "Credits: . | IAmTimCorey - .NET Core Console App with Dependency Injection, Logging, and Settings | Free elephant api | . Running project: https://github.com/EinApfelBaum/devBook/tree/main/samples/ElephantClient . Needed nuget package: . &lt;ItemGroup&gt; &lt;PackageReference Include=\"Microsoft.Extensions.Hosting\" Version=\"5.0.0\" /&gt; &lt;PackageReference Include=\"Microsoft.Extensions.Http\" Version=\"5.0.0\" /&gt; &lt;PackageReference Include=\"Serilog.Extensions.Hosting\" Version=\"4.1.2\" /&gt; &lt;PackageReference Include=\"Serilog.Settings.Configuration\" Version=\"3.1.0\" /&gt; &lt;PackageReference Include=\"Serilog.Sinks.Console\" Version=\"3.1.1\" /&gt; &lt;/ItemGroup&gt; . class Program { static async Task Main(string[] args) { var configurationBuilder = new ConfigurationBuilder(); BuildConfig(configurationBuilder); var config = configurationBuilder.Build(); Log.Logger = new LoggerConfiguration() .ReadFrom.Configuration(config) .Enrich.FromLogContext() // =&gt; adds more information from the serilog context .WriteTo.Console() .CreateLogger(); var builder = Host.CreateDefaultBuilder() .ConfigureServices(services =&gt; { // register our entry point services.AddTransient&lt;IApplication, Application&gt;(); // add a typed http client services.AddHttpClient&lt;IElephantClient, ElephantClient&gt;(config =&gt; { // add http client congif here config.BaseAddress = new Uri(\"https://elephant-api.herokuapp.com\"); }); // register some other servies }) .UseSerilog() .Build(); // entry point for our console application, here we need to concrete implementation. var app = ActivatorUtilities.CreateInstance&lt;Application&gt;(builder.Services); await app.Run(); } static void BuildConfig(IConfigurationBuilder builder) { // connect appsettings to application // The order of AddJsonFile does matter. The last will overwrite existing configs. // In our case the environment variable will overwrite existing configs. builder.SetBasePath(Directory.GetCurrentDirectory()) .AddJsonFile(\"appsettings.json\", optional: false, reloadOnChange: true) .AddJsonFile($\"appsettings.{Environment.GetEnvironmentVariable(\"ASPNETCORE_ENVIRONMENT\") ?? \"Production\"}.json\", optional: true) .AddEnvironmentVariables(); } } . public interface IApplication { Task Run(); } public class Application : IApplication { private readonly ILogger _log; private readonly IElephantClient _elephantClient; public Application(ILogger&lt;Application&gt; log, IElephantClient elephantClient) { _log = log; _elephantClient = elephantClient; } public async Task Run() { // my applidaction code await _elephantClient.GetElephants(); } } . public class ElephantClient : IElephantClient { private readonly ILogger _log; private readonly HttpClient _client; public ElephantClient (ILogger&lt;ElephantClient&gt; log, HttpClient client) { _log = log; _client = client; } public Task&lt;IEnumerable&lt;Elephant&gt;&gt; GetElephants() { return await _client.GetFromJsonAsync&lt;Elephant[]&gt;(\"elephants\"); } } record Elephant( int Index, string Name, string Image, string Wikilink ); . During development it can happen that this kind of exception occur. This basically means that a property within the incoming data could not be converted to the specified type you defined in your class/record. When you carefully read the exception you can identify the expected and given type. In this example I defined a property as string, but the Json converter expected a property of type int. ",
+    "url": "/docs/dotnet/dotnet-ConsoleApp-DI.html",
+    "relUrl": "/docs/dotnet/dotnet-ConsoleApp-DI.html"
+  },"16": {
+    "doc": "Debug a nuget package",
+    "title": "Debug a nuget package",
+    "content": "Add to csproj. &lt;PropertyGroup&gt; &lt;IncludeSymbols&gt;true&lt;/IncludeSymbols&gt; &lt;SymbolPackageFormat&gt;snupkg&lt;/SymbolPackageFormat&gt; &lt;/PropertyGroup&gt; . Pack and push nuget nupkg to feed, the snupkg will automatically pushed to symbol server . In VSCode add to launch.json . { \"justMyCode\": false, \"symbolOptions\": { \"searchPaths\": [\"http://192.168.13.40:57399/api/download/symbols\"], \"searchMicrosoftSymbolServer\": false, \"searchNuGetOrgSymbolServer\": false } } . ",
+    "url": "/docs/dotnet/dotnet-debug-nuget-package.html",
+    "relUrl": "/docs/dotnet/dotnet-debug-nuget-package.html"
+  },"17": {
+    "doc": "Debug a nuget package",
+    "title": "Resources",
+    "content": ". | https://docs.microsoft.com/en-gb/nuget/create-packages/symbol-packages-snupkg | . ",
+    "url": "/docs/dotnet/dotnet-debug-nuget-package.html#resources",
+    "relUrl": "/docs/dotnet/dotnet-debug-nuget-package.html#resources"
+  },"18": {
+    "doc": "EfCore value converter for DateTime",
+    "title": "EfCore value converter for DateTime",
+    "content": "EFCore converts DateTime from database with an undefined kind property with this extension method the property kind will be converted to UTC. public static class ModelBuilderExtensions { public static ModelBuilder UseValueConverterForType&lt;T&gt;(this ModelBuilder modelBuilder, ValueConverter converter) { return modelBuilder.UseValueConverterForType(typeof(T), converter); } public static ModelBuilder UseValueConverterForType(this ModelBuilder modelBuilder, Type type, ValueConverter converter) { foreach (var entityType in modelBuilder.Model.GetEntityTypes()) { // note that entityType.GetProperties() will throw an exception, so we have to use reflection var properties = entityType.ClrType.GetProperties().Where(p =&gt; p.PropertyType == type); foreach (var property in properties) { modelBuilder.Entity(entityType.Name).Property(property.Name) .HasConversion(converter); } } return modelBuilder; } } // In the dbcontext we need to definde the value converter protected override void OnModelCreating(ModelBuilder modelBuilder) { base.OnModelCreating(modelBuilder); var dateTimeConverter = new ValueConverter&lt;DateTime, DateTime&gt;(v =&gt; v, v =&gt; DateTime.SpecifyKind(v, DateTimeKind.Utc)); modelBuilder.UseValueConverterForType&lt;DateTime&gt;(dateTimeConverter); } . ",
+    "url": "/docs/dotnet/dotnet-efcore-valueConverter-dateTime.html",
+    "relUrl": "/docs/dotnet/dotnet-efcore-valueConverter-dateTime.html"
+  },"19": {
+    "doc": "EfCore value converter for DateTime",
+    "title": "Resources",
+    "content": ". | https://github.com/dotnet/efcore/issues/10784 | https://github.com/dotnet/efcore/issues/4711 | . ",
+    "url": "/docs/dotnet/dotnet-efcore-valueConverter-dateTime.html#resources",
+    "relUrl": "/docs/dotnet/dotnet-efcore-valueConverter-dateTime.html#resources"
+  },"20": {
+    "doc": "dotnet and local nuget feed",
+    "title": "dotnet and local nuget feed",
+    "content": " ",
+    "url": "/docs/dotnet/dotnet-nuget-local-feed.html",
+    "relUrl": "/docs/dotnet/dotnet-nuget-local-feed.html"
+  },"21": {
+    "doc": "dotnet and local nuget feed",
+    "title": "Empty folder",
+    "content": "No need to push nuget package to local feed, use an empty folder. Add --source localNugetFeedFolder option to the commands. Source is the local nuget feed folder. dotnet add package MyLib -v 1.0.1 --source ~/git/packages/ dotnet restore --source ~/git/packages . ",
+    "url": "/docs/dotnet/dotnet-nuget-local-feed.html#empty-folder",
+    "relUrl": "/docs/dotnet/dotnet-nuget-local-feed.html#empty-folder"
+  },"22": {
+    "doc": "dotnet and local nuget feed",
+    "title": "Local nuget feed as source to nuget config",
+    "content": "The nuget config can be found here : ~/.nuget/NuGet/NuGet.Config . # Add feed as source to nuget config dotnet nuget add source ~/git/packages --name localNugetFeed dotnet nuget add source http://mynugetfeed.de/v3/index.json --name serverNugetFeed . # push nuget package to local nuget feed dotnet nuget push --source localNugetFeed MyLib.1.0.0.nupkg . # add package to app dotnet add package MyLib -v 1.0.0 . ",
+    "url": "/docs/dotnet/dotnet-nuget-local-feed.html#local-nuget-feed-as-source-to-nuget-config",
+    "relUrl": "/docs/dotnet/dotnet-nuget-local-feed.html#local-nuget-feed-as-source-to-nuget-config"
+  },"23": {
+    "doc": "dotnet and local nuget feed",
+    "title": "Push package and configure in csproj",
+    "content": "# push nuget package to local nuget feed dotnet nuget push --source ~/git/packages MyLib.1.0.0.nupkg . # add the restore source to the csproj &lt;PropertyGroup&gt; &lt;RestoreSources&gt;$(RestoreSources);../../git/packages/;https://api.nuget.org/v3/index.json&lt;/RestoreSources&gt; &lt;/PropertyGroup&gt; . # add package to app dotnet add package MyLib -v 1.0.0 . ",
+    "url": "/docs/dotnet/dotnet-nuget-local-feed.html#push-package-and-configure-in-csproj",
+    "relUrl": "/docs/dotnet/dotnet-nuget-local-feed.html#push-package-and-configure-in-csproj"
+  },"24": {
+    "doc": "dotnet and local nuget feed",
+    "title": "Resources",
+    "content": ". | https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-add-source | . ",
+    "url": "/docs/dotnet/dotnet-nuget-local-feed.html#resources",
+    "relUrl": "/docs/dotnet/dotnet-nuget-local-feed.html#resources"
+  },"25": {
+    "doc": "Push a nuget package within a docker container",
+    "title": "Push a nuget package within a docker container",
+    "content": "# https://hub.docker.com/_/microsoft-dotnet-core FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as build-image ARG Version WORKDIR /home/app # copy csproj and restore as distinct layers COPY ./*/*.csproj ./SampleProject/ COPY ./*.sln . RUN dotnet restore # copy everything else and build app COPY . RUN dotnet build \\ -p:Version=$Version \\ --configuration Release \\ --no-restore RUN dotnet pack \\ -p:Version=$Version \\ -p:IncludeSymbols=true \\ -p:SymbolPackageFormat=snupkg \\ --configuration Release \\ --no-build \\ --output /artifacts ENTRYPOINT [\"dotnet\", \"nuget\", \"push\", \"/artifacts/*.nupkg\", \"--skip-duplicate\"] . Build the container: . docker build -t push-packages --build-arg Version=0.0.1 . To push the nuget packages to repository, run the container =&gt; The source and api-key argument will be appended to the entry point . docker run push-packages --source ${NUGET_REPO} --api-key ${NUGET_API_KEY} . ",
+    "url": "/docs/dotnet/dotnet-nuget-push-in-docker-container.html",
+    "relUrl": "/docs/dotnet/dotnet-nuget-push-in-docker-container.html"
+  },"26": {
+    "doc": "Push a nuget package within a docker container",
+    "title": "Resources",
+    "content": ". | https://andrewlock.net/pushing-nuget-packages-built-in-docker-by-running-the-container/ | . ",
+    "url": "/docs/dotnet/dotnet-nuget-push-in-docker-container.html#resources",
+    "relUrl": "/docs/dotnet/dotnet-nuget-push-in-docker-container.html#resources"
+  },"27": {
+    "doc": "Record: Serialize/deserialize attributes using primary constructor",
+    "title": "Record: Serialize/deserialize attributes using primary constructor",
+    "content": "The JsonPropertyName will override any naming policy specified by JsonNamingPolicy. public record Person( [property: JsonPropertyName(\"name_test\")] string Name, [property: JsonPropertyName(\"age_test\")] int Age ); var person = new Person(\"userA\", 42); var json = JsonSerializer.Serialize(person); . { \"name_test\": \"userA\", \"age_test\": 42 } . Sample . ",
+    "url": "/docs/dotnet/dotnet-record-json-serialize-deserialize.html",
+    "relUrl": "/docs/dotnet/dotnet-record-json-serialize-deserialize.html"
+  },"28": {
+    "doc": "Verify a method call wit exact parameters",
+    "title": "Verify a method call wit exact parameters",
+    "content": "var name = \"Peter\"; var age = 42; serviceMock.Verify(service =&gt; service.CreateAsync( It.Is&lt;Person&gt;(x =&gt; x.Name == name &amp;&amp; x.Age == age), It.IsAny&lt;CancellationToken&gt;()), Times.Once); . This does not work, because moq uses Object.Equals under the hood: . serviceMock.Verify(service =&gt; service.CreateAsync( new Person() { Name = \"Peter\", Age = 42 }, It.IsAny&lt;CancellationToken&gt;()), Times.Once); . ",
+    "url": "/docs/dotnet/dotnet-unitTest-moq.html",
+    "relUrl": "/docs/dotnet/dotnet-unitTest-moq.html"
+  },"29": {
+    "doc": "Remove a submodule",
+    "title": "Remove a submodule",
+    "content": "git submodule deinit &lt;path_to_submodule&gt; git rm &lt;path_to_submodule&gt; git commit -m \"Removed submodule \" rm -rf .git/modules/&lt;path_to_submodule&gt; . ",
+    "url": "/docs/git-remove-submodule.html",
+    "relUrl": "/docs/git-remove-submodule.html"
+  },"30": {
+    "doc": "Remove a submodule",
+    "title": "Resources",
+    "content": ". | https://gist.github.com/myusuf3/7f645819ded92bda6677 | . ",
+    "url": "/docs/git-remove-submodule.html#resources",
+    "relUrl": "/docs/git-remove-submodule.html#resources"
+  },"31": {
+    "doc": "Handle node versions [win 10]",
+    "title": "Handle node versions [win 10]",
+    "content": "Install nvm . nvm list nvm install 14.15.0 nvm use 14.15.0 nvm uninstall 14.7.0 . ",
+    "url": "/docs/handle-node-versions.html",
+    "relUrl": "/docs/handle-node-versions.html"
+  },"32": {
+    "doc": "Handle node versions [win 10]",
+    "title": "Resources",
+    "content": ". | https://community.chocolatey.org/packages/nvm | . ",
+    "url": "/docs/handle-node-versions.html#resources",
+    "relUrl": "/docs/handle-node-versions.html#resources"
+  },"33": {
+    "doc": "HTML nested list",
+    "title": "HTML nested list",
+    "content": ". ol { counter-reset: item; } ol li { display: block; } ol li:before { content: counters(item, \". \") \". \"; counter-increment: item; } . &lt;ol&gt; &lt;li&gt;Parent 1 &lt;!-- Parent open li tag --&gt; &lt;ol&gt; &lt;li&gt;Child&lt;/li&gt; &lt;/ol&gt; &lt;/li&gt; &lt;!-- Parent close li tag --&gt; &lt;li&gt;Parent 2&lt;/li&gt; &lt;/ol&gt; . ⚠️ The nested list must included into the parent &lt;li&gt; element! . ",
+    "url": "/docs/html-nested-list-css.html",
+    "relUrl": "/docs/html-nested-list-css.html"
+  },"34": {
+    "doc": "HTML nested list",
+    "title": "❌ This will not work",
+    "content": "&lt;ol&gt; &lt;li&gt;Parent 1&lt;/li&gt; &lt;ol&gt; &lt;li&gt;Child&lt;/li&gt; &lt;/ol&gt; &lt;li&gt;Parent 2&lt;/li&gt; &lt;/ol&gt; . ",
+    "url": "/docs/html-nested-list-css.html#-this-will-not-work",
+    "relUrl": "/docs/html-nested-list-css.html#-this-will-not-work"
+  },"35": {
+    "doc": "Home",
+    "title": "👋 Welcome to my dev book",
+    "content": "A wiki based on Foam . ",
+    "url": "/#-welcome-to-my-dev-book",
+    "relUrl": "/#-welcome-to-my-dev-book"
+  },"36": {
+    "doc": "Home",
+    "title": "Home",
+    "content": " ",
+    "url": "/",
+    "relUrl": "/"
+  },"37": {
+    "doc": "Linux",
+    "title": "Linux",
+    "content": " ",
+    "url": "/linux",
+    "relUrl": "/linux"
+  },"38": {
+    "doc": "dotnet",
+    "title": "dotnet",
+    "content": " ",
+    "url": "/dotnet",
+    "relUrl": "/dotnet"
+  },"39": {
+    "doc": "Cheat sheets",
+    "title": "Cheat sheets",
+    "content": " ",
+    "url": "/cheatSheets",
+    "relUrl": "/cheatSheets"
+  },"40": {
+    "doc": "Install iobroker with ConBee2 in debian virtual machine",
+    "title": "Install iobroker with ConBee2 in debian virtual machine",
+    "content": " ",
+    "url": "/docs/iobroker-conbee-debian-VM.html",
+    "relUrl": "/docs/iobroker-conbee-debian-VM.html"
+  },"41": {
+    "doc": "Install iobroker with ConBee2 in debian virtual machine",
+    "title": "deCONZ Installation",
+    "content": "In the next step we will now install the just installed virtual machine with Debian, a few more prerequisites and programs to then install deCONZ. | After the system is up, we establish an SSH connection via PUTTY and log in with the personal user ID and not root. Once you are logged in, type su to then enter the password of the “root user”. | Now install sudo with the following command: apt-get install sudo | Now we have to install the package gnupg. We do this with the command: apt-get install gnupg | The next step is to set the USB access rights for users. To do this, please enter the following command: sudo gpasswd -a $USER dialout | With the following command we import the Phoscon public key: | . wget -O - http://phoscon.de/apt/deconz.pub.key | sudo apt-key add - . | configure APT-Repository for deCONZ: | . sudo sh -c \"echo 'deb http://phoscon.de/apt/deconz \\ $(lsb_release -cs) main' &amp;gt; \\ /etc/apt/sources.list.d/deconz.list\" . | Update APT package list: sudo apt update | install deCONZ sudo apt install deconz | The following command defines that deCONZ will be started automatically when booting the VM: sudo systemctl enable deconz | After a few seconds the operating system on the Raspberry will be restarted. | As a last step please reboot the virtual machine best via proxmox; | After a few seconds the start up process is finished and the gateway is available in your network. | Now you can use your router to find out the assigned IP address or simply do the next step for the initial start up | . ",
+    "url": "/docs/iobroker-conbee-debian-VM.html#deconz-installation",
+    "relUrl": "/docs/iobroker-conbee-debian-VM.html#deconz-installation"
+  },"42": {
+    "doc": "Install iobroker with ConBee2 in debian virtual machine",
+    "title": "Initial commissioning",
+    "content": "Calling up the Phoscon App via http://phoscon.de/app in a browser. The gateway is displayed with the name Phoscon-GW and its current IP address. If not, the search for the gateway can be started directly via the Phoscon logo. | When you call the gateway for the first time, a screen will appear where you have to enter a new password for security. Then click on Next; | Next you will get to the page where you can learn new lights. Recommendation here would be to first click on Continue without lights in the upper right corner; | Now you will be asked to define a first group. Also close this screen with X; | Next, select the Gateway menu item to check if the gateway is available and if a firmware update is required. In my case the version was already up to date, because I already did an update during the installation in a Proxmox VM. | With this, the basic setup of the Phoscon APP is also already done. The Phoscon App is a software to configure and control your smart light installations, no matter if small or big, specialized on the Zigbee wireless standard. The Phoscon App supports a constantly growing number of lights, sensors and switches from different manufacturers. | A really comprehensive and good documentation can be found at the following link: Documentation | . With this, all further actions such as teaching of lamps and other devices, definition of groups or scenarios should be possible without any problems. ",
+    "url": "/docs/iobroker-conbee-debian-VM.html#initial-commissioning",
+    "relUrl": "/docs/iobroker-conbee-debian-VM.html#initial-commissioning"
+  },"43": {
+    "doc": "Install iobroker with ConBee2 in debian virtual machine",
+    "title": "Resources",
+    "content": ". | https://technikkram.net/blog/2020/04/18/conbee-ii-installation-des-universellen-zigbee-gateways-in-einer-vm-unter-proxmox/ | . ",
+    "url": "/docs/iobroker-conbee-debian-VM.html#resources",
+    "relUrl": "/docs/iobroker-conbee-debian-VM.html#resources"
+  },"44": {
+    "doc": "Bash",
+    "title": "Bash",
+    "content": " ",
+    "url": "/docs/linux/linux-bash-cheatSheet.html",
+    "relUrl": "/docs/linux/linux-bash-cheatSheet.html"
+  },"45": {
+    "doc": "Bash",
+    "title": "List all sub directories",
+    "content": "cd \"/my/path\" for index in * do echo $index done . ",
+    "url": "/docs/linux/linux-bash-cheatSheet.html#list-all-sub-directories",
+    "relUrl": "/docs/linux/linux-bash-cheatSheet.html#list-all-sub-directories"
+  },"46": {
+    "doc": "Bash",
+    "title": "File exist",
+    "content": "if [ -d \"folderName\" ] then echo \"exist\" else echo \"does not exist\" fi . ",
+    "url": "/docs/linux/linux-bash-cheatSheet.html#file-exist",
+    "relUrl": "/docs/linux/linux-bash-cheatSheet.html#file-exist"
+  },"47": {
+    "doc": "chmod - change file mode bits",
+    "title": "chmod - change file mode bits",
+    "content": "| access |   | . | u | user | . | g | group | . | o | others | . | a | all | . | file mode bits |   | . | r | read | . | w | write | . | x | executable | . chmod [ugoa] [-+=] [rwxXst] . User write access chmod u+w &lt;filename&gt; . Group write access chmod g+w &lt;filename&gt; . All write access chmod a+w &lt;filename&gt; . ",
+    "url": "/docs/linux/linux-chmod.html",
+    "relUrl": "/docs/linux/linux-chmod.html"
+  },"48": {
+    "doc": "chmod - change file mode bits",
+    "title": "Resources",
+    "content": ". | https://linux.die.net/man/1/chmod | . ",
+    "url": "/docs/linux/linux-chmod.html#resources",
+    "relUrl": "/docs/linux/linux-chmod.html#resources"
+  },"49": {
+    "doc": "Clean up linux",
+    "title": "Clean up linux",
+    "content": "sudo apt-get autoremove sudo apt-get autoclean # clean trash of root sudo rm -rf /root/.local/share/Trash/files/* # clean docker docker system prune --all . ",
+    "url": "/docs/linux/linux-cleanup.html",
+    "relUrl": "/docs/linux/linux-cleanup.html"
+  },"50": {
+    "doc": "Clean up linux",
+    "title": "Resources",
+    "content": ". | https://docs.docker.com/engine/reference/commandline/system_prune/ | . ",
+    "url": "/docs/linux/linux-cleanup.html#resources",
+    "relUrl": "/docs/linux/linux-cleanup.html#resources"
+  },"51": {
+    "doc": "Linux disk commands",
+    "title": "Linux disk commands",
+    "content": "# Overview of all partitions sudo blkid -o list -w /dev/null . ",
+    "url": "/docs/linux/linux-disk-cli.html",
+    "relUrl": "/docs/linux/linux-disk-cli.html"
+  },"52": {
+    "doc": "Custom installation path 2",
+    "title": "Custom installation path 2",
+    "content": "It’s best (not mandatory) if the following conditions are adhered to … . | Its is best to have a separate partition on your internal hard disk (preferable) dedicated to installing flatpak applications. | It is best to configure you linux OS to auto mount partition on boot … | Its is best to let the partitions mount at their default locations … some OSes mount it in /media/user and some mount it in /mnt | It is best to name/label the partition | . The following commands are written assuming the default location being /media/user and partitions get auto mounted at this location. Make changes according to your own systems. I have a separate partition labelled it as flatpak (name of the partition not the folder). sudo mkdir /media/Flatpak/flatpak sudo mkdir /etc/flatpak sudo mkdir /etc/flatpak/installations.d sudo gedit /etc/flatpak/installations.d/extra.conf . Custom install location : myFlatpaks . Paste the following block in the extra.conf file and save it … . [Installation \"myFlatpaks\"] Path=/media/Flatpak/flatpak/ DisplayName=myFlatpaks Installation StorageType=harddisk . Add the flathub remote to this custom install location . flatpak --installation=myFlatpaks remote-add flathub https://flathub.org/repo/flathub.flatpakrepo . Check the environment variable XDG_DATA_DIRS, if the custom path was added. echo $XDG_DATA_DIRS . If not, add the path to XDG_DATA_DIRS. In your .profile file (${HOME}/.profile). This is the default situation on most Unix installations, and in particular on Debian. If your login shell is bash and these following files exist, you can use .bash_profile (${HOME}/.bash_profile) or .bash_login instead. # append XDG_DATA_DIRS so it includes custom path to flatpak if it exists if [ -d \"/media/Flatpak/flatpak/exports/share\" ] ; then XDG_DATA_DIRS=\"/media/Flatpak/flatpak/exports/share:$XDG_DATA_DIRS\" fi . ",
+    "url": "/docs/linux/linux-flatpak-custom-path-2.html",
+    "relUrl": "/docs/linux/linux-flatpak-custom-path-2.html"
+  },"53": {
+    "doc": "Custom installation path 2",
+    "title": "Advantages of using a Separate partition dedicated ONLY for flatpak applications",
+    "content": ". | In cases where the OS is reinstalled from scratch which involves formatting /root and /home partition. (Tested and Works) | In cases where you are switching from one linux distro to another. (not yet tested as such a situation hasn’t been encountered by me). | . ",
+    "url": "/docs/linux/linux-flatpak-custom-path-2.html#advantages-of-using-a-separate-partition-dedicated-only-for-flatpak-applications",
+    "relUrl": "/docs/linux/linux-flatpak-custom-path-2.html#advantages-of-using-a-separate-partition-dedicated-only-for-flatpak-applications"
+  },"54": {
+    "doc": "Custom installation path 2",
+    "title": "Commands to manage applications at this custom install location",
+    "content": "# Install flatpak --installation=myFlatpaks install flathub org.application.name # Uninstall flatpak --installation=myFlatpaks uninstall org.application.name # Update flatpak --installation=myFlatpaks update org.application.name # List # to list all applications flatpak list # to list applications only from a specific installation location. flatpak --installation=myFlatpaks list # Run flatpak run flathub org.application.name . ",
+    "url": "/docs/linux/linux-flatpak-custom-path-2.html#commands-to-manage-applications-at-this-custom-install-location",
+    "relUrl": "/docs/linux/linux-flatpak-custom-path-2.html#commands-to-manage-applications-at-this-custom-install-location"
+  },"55": {
+    "doc": "Custom installation path 2",
+    "title": "Resources",
+    "content": ". | https://github.com/flatpak/flatpak/issues/2337 | . ",
+    "url": "/docs/linux/linux-flatpak-custom-path-2.html#resources",
+    "relUrl": "/docs/linux/linux-flatpak-custom-path-2.html#resources"
+  },"56": {
+    "doc": "Custom installation path",
+    "title": "Custom installation path",
+    "content": "Two different option for a custom installation path. | Use the option --user when you install a flatpak package . flatpak install --user --from http://ftp.fau.de/tdf/libreoffice/flatpak/LibreOffice.flatpakref . | Configure a custom path. This path could be on a different partition. See description here [linux-flatpak-custom-path-2] . For a faster installation and to prevent errors create an alias: . fish alias alias myFlatpak=\"flatpak --installation=myFlatpaks install flathub\" funcsave myFlatpak myFlatpak org.texstudio.TeXstudio . | . ",
+    "url": "/docs/linux/linux-flatpak-custom-path.html",
+    "relUrl": "/docs/linux/linux-flatpak-custom-path.html"
+  },"57": {
+    "doc": "Custom installation path",
+    "title": "Resources",
+    "content": ". | https://github.com/flatpak/flatpak/issues/2337 | https://docs.flatpak.org/en/latest/tips-and-tricks.html#adding-a-custom-installation | . ",
+    "url": "/docs/linux/linux-flatpak-custom-path.html#resources",
+    "relUrl": "/docs/linux/linux-flatpak-custom-path.html#resources"
+  },"58": {
+    "doc": "Install flatpak dbeaver extension",
+    "title": "Install flatpak dbeaver extension",
+    "content": "To create a database dump/backup you need to install an extension to load the specific client library. # mmaradb flatpak install flathub io.dbeaver.DBeaverCommunity.Client.mariadb # postgres flatpak install flathub io.dbeaver.DBeaverCommunity.Client.pgsql . ",
+    "url": "/docs/linux/linux-flatpak-dbeaver.html",
+    "relUrl": "/docs/linux/linux-flatpak-dbeaver.html"
+  },"59": {
+    "doc": "Install flatpak dbeaver extension",
+    "title": "Resources",
+    "content": ". | https://github.com/dbeaver/dbeaver/issues/5008 | . ",
+    "url": "/docs/linux/linux-flatpak-dbeaver.html#resources",
+    "relUrl": "/docs/linux/linux-flatpak-dbeaver.html#resources"
+  },"60": {
+    "doc": "grep, egrep, fgrep - print lines matching a pattern",
+    "title": "grep, egrep, fgrep - print lines matching a pattern",
+    "content": "grep -rnw '/path/to/somewhere/' -e 'pattern' # -r or -R is recursive, # -n is line number, and # -w stands for match the whole word. # -l (lower-case L) can be added to just give the file name of matching files. # -i, --ignore-case Ignore case distinctions in both the PATTERN and the input files. # Along with these, --exclude, --include, --exclude-dir or --include-dir flags could be used for efficient searching: # This will only search through those files which have .c or .h extensions: grep --include=\\*.{c,h} -rnw '/path/to/somewhere/' -e \"pattern\" # This will exclude searching all the files ending with .o extension: grep --exclude=*.o -rnw '/path/to/somewhere/' -e \"pattern\" # Just like exclude files, it's possible to exclude/include directories through --exclude-dir and --include-dir parameter. For example, this will exclude the dirs dir1/, dir2/ and all of them matching *.dst/: grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e \"pattern\" . ",
+    "url": "/docs/linux/linux-grep.html",
+    "relUrl": "/docs/linux/linux-grep.html"
+  },"61": {
+    "doc": "grep, egrep, fgrep - print lines matching a pattern",
+    "title": "Resources",
+    "content": ". | https://linux.die.net/man/1/grep | . ",
+    "url": "/docs/linux/linux-grep.html#resources",
+    "relUrl": "/docs/linux/linux-grep.html#resources"
+  },"62": {
+    "doc": "Move free space from end of the drive to first partition with gparted",
+    "title": "Move free space from end of the drive to first partition with gparted",
+    "content": " ",
+    "url": "/docs/linux/linux-move-free-space.html",
+    "relUrl": "/docs/linux/linux-move-free-space.html"
+  },"63": {
+    "doc": "Move free space from end of the drive to first partition with gparted",
+    "title": "Problem",
+    "content": "Is is frustrating - no matter how I try, gparted won’t let me assign the empty space to the first partition: . The middle partition is blocking me from expanding /dev/sda1. I need to move partition /dev/sda2 to the end of the drive, like so (fabricated image): . Then I will be able to expand first partition: . How to do that? I assume data from /dev/sda2 must be physically copied to end of the drive. ",
+    "url": "/docs/linux/linux-move-free-space.html#problem",
+    "relUrl": "/docs/linux/linux-move-free-space.html#problem"
+  },"64": {
+    "doc": "Move free space from end of the drive to first partition with gparted",
+    "title": "Solution",
+    "content": "It is recommended that, before making any changes, you make backups of any data you do not want to lose in case anything goes wrong. Before you start, both partitions will need to be unmounted– if you cannot unmount one of them (e.g. because it is your root partition), use a live CD with GParted (e.g. the GParted live CD or the Ubuntu live CD) and resize them that way. | Select the second (extended) partition, and click on Resize/Move . | Use the right handle to extend the partition to the end of the free space, and then click on Resize/Move . | Select the contained swap partition, and click on Resize/Move . | Drag the partition to the end of the extended partition, and then click on Resize/Move . | You can safely click OK on this warning message, as we are only moving a swap partition . | Select the extended partition again and click on Resize/Move . | Use the left handle to shrink the partition to the end of the free space, and then click on Resize/Move . | Then, select the first partition, and click on Resize/Move . | Use the right handle to extend the partition to the end of the free space, and then click on Resize/Move . | Finally, click on Apply and your partitions should be reformatted . | . ",
+    "url": "/docs/linux/linux-move-free-space.html#solution",
+    "relUrl": "/docs/linux/linux-move-free-space.html#solution"
+  },"65": {
+    "doc": "Move free space from end of the drive to first partition with gparted",
+    "title": "Resources",
+    "content": ". | https://unix.stackexchange.com/questions/271671/move-free-space-from-end-of-the-drive-to-first-partition-with-gparted | . ",
+    "url": "/docs/linux/linux-move-free-space.html#resources",
+    "relUrl": "/docs/linux/linux-move-free-space.html#resources"
+  },"66": {
+    "doc": "scp - secure copy (remote file copy program)",
+    "title": "scp - secure copy (remote file copy program)",
+    "content": "scp -P &lt;port_number&gt; &lt;source&gt; &lt;destination&gt; # remote =&gt; local scp root@192.168.123.1:/home/remoteUser/file.txt /home/localUser/file.txt # local =&gt; remote scp -P 123456 /home/localUser/test.sh root@192.168.123.1:/home/remoteUser/test.sh # Enter password. ",
+    "url": "/docs/linux/linux-scp.html",
+    "relUrl": "/docs/linux/linux-scp.html"
+  },"67": {
+    "doc": "scp - secure copy (remote file copy program)",
+    "title": "Resources",
+    "content": ". | https://linux.die.net/man/1/scp | . ",
+    "url": "/docs/linux/linux-scp.html#resources",
+    "relUrl": "/docs/linux/linux-scp.html#resources"
+  },"68": {
+    "doc": "Extend fish PATH",
+    "title": "Extend fish PATH",
+    "content": "$PATH is an environment variable containing the directories that fish searches for commands. Unlike other shells, $PATH is a list, not a colon-delimited string. To prepend /usr/local/bin and /usr/sbin to $PATH, you can write: . set PATH /usr/local/bin /usr/sbin $PATH . To remove /usr/local/bin from $PATH, you can write: . set PATH (string match -v /usr/local/bin $PATH) . For compatibility with other shells and external commands, $PATH is a path variable, and so will be joined with colons (not spaces) when you quote it: . echo \"$PATH\" /usr/local/sbin:/usr/local/bin:/usr/bin . and it will be exported like that, and when fish starts it splits the $PATH it receives into a list on colon. You can do so directly in config.fish, like you might do in other shells with .profile. See this example: . A faster way is to modify the $fish_user_paths universal variable, which is automatically prepended to $PATH. For example, to permanently add /usr/local/bin to your $PATH, you could write: . set -U fish_user_paths /usr/local/bin $fish_user_paths . The advantage is that you don’t have to go mucking around in files: just run this once at the command line, and it will affect the current session and all future instances too. (Note: you should NOT add this line to config.fish. If you do, the variable will get longer each time you run fish!) . ",
+    "url": "/docs/linux/linux-shell-fish-extend-PATH.html",
+    "relUrl": "/docs/linux/linux-shell-fish-extend-PATH.html"
+  },"69": {
+    "doc": "Extend fish PATH",
+    "title": "Resources",
+    "content": ". | https://github.com/fish-shell/fish-shell | https://fishshell.com/docs/current/tutorial.html#tut-lists | https://fishshell.com/docs/current/index.html#variables-path | https://fishshell.com/docs/current/tutorial.html#tut-universal | . ",
+    "url": "/docs/linux/linux-shell-fish-extend-PATH.html#resources",
+    "relUrl": "/docs/linux/linux-shell-fish-extend-PATH.html#resources"
+  },"70": {
+    "doc": "Switching to fish",
+    "title": "Switching to fish",
+    "content": "If you wish to use fish as your default shell, use the following command: . chsh -s /usr/local/bin/fish . chsh will prompt you for your password and change your default shell. (Substitute /usr/local/bin/fish with whatever path fish was installed to, if it differs.) Log out, then log in again for the changes to take effect. Use the following command if fish isn’t already added to /etc/shells to permit fish to be your login shell: . echo /usr/local/bin/fish | sudo tee -a /etc/shells . To switch your default shell back, you can run chsh -s /bin/bash (substituting /bin/bash with /bin/tcsh or /bin/zsh as appropriate). ",
+    "url": "/docs/linux/linux-shell-fish.html",
+    "relUrl": "/docs/linux/linux-shell-fish.html"
+  },"71": {
+    "doc": "Switching to fish",
+    "title": "Resources",
+    "content": ". | https://github.com/fish-shell/fish-shell | . ",
+    "url": "/docs/linux/linux-shell-fish.html#resources",
+    "relUrl": "/docs/linux/linux-shell-fish.html#resources"
+  },"72": {
+    "doc": "ssh cli",
+    "title": "ssh cli",
+    "content": "# Generating public/private rsa key pair. ssh-keygen -b 4096 # Copy public key to remote ssh-copy-id -i .ssh/key_rsa.pub &lt;USER&gt;@&lt;REMOTE IP&gt; ssh &lt;USER&gt;@&lt;REMOTE IP&gt; . ",
+    "url": "/docs/linux/linux-ssh-key-cli.html",
+    "relUrl": "/docs/linux/linux-ssh-key-cli.html"
+  },"73": {
+    "doc": "ssh - OpenSSH SSH client (remote login program)",
+    "title": "ssh - OpenSSH SSH client (remote login program)",
+    "content": "ssh -p &lt;port&gt; &lt;user&gt;@&lt;remote_IP&gt; ssh -p 123 root@192.168.1.1 # Enter password # Execute command on remote machine sudo ssh -p 123 root@192.168.1.1 \"cd /home/remoteUser; ls\" . ",
+    "url": "/docs/linux/linux-ssh.html",
+    "relUrl": "/docs/linux/linux-ssh.html"
+  },"74": {
+    "doc": "ssh - OpenSSH SSH client (remote login program)",
+    "title": "Resources",
+    "content": ". | https://linux.die.net/man/1/ssh | . ",
+    "url": "/docs/linux/linux-ssh.html#resources",
+    "relUrl": "/docs/linux/linux-ssh.html#resources"
+  },"75": {
+    "doc": "Enable thunderbolt device on linux",
+    "title": "Enable thunderbolt device on linux",
+    "content": "My problem: The monitor was working, but the connected USB mouse and keyboard did not work. boltctl - control the thunderbolt device manager . # On linux mint bolt is already installed sudo apt-get install bolt # For more information man boltctl # Show thunderbolt devices, copy the UUID for later boltctl . The yellow dot means that the device is currently not fully authorized. # Authorize the thunderbolt device with the device UUID from above sudo boltctl enroll --policy auto DEVICE_UUID . From the manpage: . enroll [–policy policy] DEVICE Authorize and record the device with the unique id DEVICE in the database. If the domain supports secure connection a new key will be generated and stored in the database alongside the device name and vendor name. The key, if created, will be used in the future to securely authorize the device. –policy {default | auto | manual} Specify the policy to be used for the newly enrolled device. auto: Automatically authorize this device whenever it is connected. ",
+    "url": "/docs/linux/linux-thunderbolt.html",
+    "relUrl": "/docs/linux/linux-thunderbolt.html"
+  },"76": {
+    "doc": "Enable thunderbolt device on linux",
+    "title": "Resources",
+    "content": ". | https://forums.linuxmint.com/viewtopic.php?t=299991 | . ",
+    "url": "/docs/linux/linux-thunderbolt.html#resources",
+    "relUrl": "/docs/linux/linux-thunderbolt.html#resources"
+  },"77": {
+    "doc": "Markdown smiley",
+    "title": "Markdown smiley",
+    "content": " ",
+    "url": "/docs/cheatSheets/markdown-smiley.html",
+    "relUrl": "/docs/cheatSheets/markdown-smiley.html"
+  },"78": {
+    "doc": "Markdown cheatsheet",
+    "title": "Markdown cheatsheet",
+    "content": "Markdown cheatsheet . ",
+    "url": "/docs/cheatSheets/markdown.html",
+    "relUrl": "/docs/cheatSheets/markdown.html"
+  },"79": {
+    "doc": "ngrok",
+    "title": "ngrok",
+    "content": ".\\ngrok authtoken YOUR_TOKEN_HERE .\\ngrok.exe http -region eu https://localhost:YOUR_PORT_HERE . ",
+    "url": "/docs/ngrok.html",
+    "relUrl": "/docs/ngrok.html"
+  },"80": {
+    "doc": "ngrok",
+    "title": "Resources",
+    "content": ". | https://ngrok.com/docs | . ",
+    "url": "/docs/ngrok.html#resources",
+    "relUrl": "/docs/ngrok.html#resources"
+  },"81": {
+    "doc": "nuget push / delete",
+    "title": "nuget push / delete",
+    "content": "dotnet nuget push --source myNugetFeed --api-key \"ApiKey\" \"PackageName.nupkg\" dotnet nuget delete --source myNugetFeed --api-key \"ApiKey\" \"PackageName\" \"PackageVersion\" --non-interactive dotnet nuget push --source http://&lt;MyNugetFeedIp&gt;:&lt;PORT&gt;/v3/index.json --api-key MyApiKey MyNugetPackage dotnet nuget delete --source http://&lt;MyNugetFeedIp&gt;:&lt;PORT&gt;/v3/index.json --api-key MyApiKey MyNugetPackage 0.0.1 --non-interactive . ",
+    "url": "/docs/nuget-push-delete.html",
+    "relUrl": "/docs/nuget-push-delete.html"
+  },"82": {
+    "doc": "nuget push / delete",
+    "title": "local feed in directory or packages copied into folders",
+    "content": "dotnet nuget delete --source localFeed MyLib 1.0.0 --non-interactive dotnet nuget delete --source ~/git/packages MyLib 1.0.0 --non-interactive . ",
+    "url": "/docs/nuget-push-delete.html#local-feed-in-directory-or-packages-copied-into-folders",
+    "relUrl": "/docs/nuget-push-delete.html#local-feed-in-directory-or-packages-copied-into-folders"
+  },"83": {
+    "doc": "install InvoicePlane in LXC",
+    "title": "install InvoicePlane in LXC",
+    "content": "# after installing apache2 webserver apt-get install unzip apt-get install libapache2-mod-php7.3 apt-get install php7.3-mysql php7.3-json php7.3-mbstring php7.3-recode php7.3-xmlrpc cd var/www/html wget https://www.invoiceplane.org/download/v1.5.11 unzip v1.5.11 chown -R www-data:www-data /var/www/html/ # make a copy of the ipconfig.php.example file and rename the copy to ipconfig.php # Open the ipconfig.php file and add your URL in it like described in the file. # --&gt; url=http://myDomain.de # To get remote write access with VSCode, a new user must be created to access it with SSH. User must be in the www-data group. # Folders and files must additionally get g+w rights # with root chown -R \"User\":www-data /var/www/html/ # Adjust folder rights find -type -d -exec chmod g+w {} \\; . ",
+    "url": "/docs/proxmox-LXC-InvoicePlane.html",
+    "relUrl": "/docs/proxmox-LXC-InvoicePlane.html"
+  },"84": {
+    "doc": "Commands for new Linux container",
+    "title": "Commands for new Linux container",
+    "content": "# with root user # first update and upgrade apt-get update | apt-get upgrade # install fish apt-get install fish -y # make fish the default shell for root chsh -s /usr/bin/fish # ectend PATH environment set -U fish_user_paths /usr/local/bin $fish_user_paths # install apache webserver, if needed apt-get install apache2 -y # install htop apt-get install htop -y ######################## # maybe for ssh access # add user with home useradd --create-home *Username* # add password for user passwd *Username* # change shell of the user chsh -s /usr/bin/fish *Username* # ssh key must be created on client side (laptop/workstation) # 1. create ssh key with ui program # 2. create ssh key with terminal ssh-keygen -b 4096 -f *filename* # after you create the ssh key # copy public key to remote server ssh-copy-id -i .ssh/*filename*.pub -o IdentitiesOnly=yes *Username*@*ServerIP* . ",
+    "url": "/docs/proxmox-LXC.html",
+    "relUrl": "/docs/proxmox-LXC.html"
+  },"85": {
+    "doc": "restic - Restore using mount¶",
+    "title": "restic - Restore using mount¶",
+    "content": "Browsing your backup as a regular file system is also very easy. First, create a mount point such as /mnt/restic and then use the following command to serve the repository with FUSE: . $ mkdir /mnt/restic $ restic -r /srv/restic-repo mount /mnt/restic enter password for repository: Now serving /srv/restic-repo at /mnt/restic When finished, quit with Ctrl-c or umount the mountpoint. ",
+    "url": "/docs/restic-linux-restore.html",
+    "relUrl": "/docs/restic-linux-restore.html"
+  },"86": {
+    "doc": "restic - Restore using mount¶",
+    "title": "Resources",
+    "content": ". | https://restic.readthedocs.io/en/stable/050_restore.html | . ",
+    "url": "/docs/restic-linux-restore.html#resources",
+    "relUrl": "/docs/restic-linux-restore.html#resources"
+  },"87": {
+    "doc": "restic - Restore on Win 10",
+    "title": "restic - Restore on Win 10",
+    "content": ". | download restic repo | unzip | view snapshots restic.exe -r .\\DockerVolumes\\ snapshots . | restore a specific snapshot restic -r .\\DockerVolumes restore 9794275e --target .\\temp\\ | . ",
+    "url": "/docs/restic-win10-restore.html",
+    "relUrl": "/docs/restic-win10-restore.html"
+  },"88": {
+    "doc": "restic - Restore on Win 10",
+    "title": "Resources",
+    "content": ". | https://restic.readthedocs.io/en/stable/050_restore.html | . ",
+    "url": "/docs/restic-win10-restore.html#resources",
+    "relUrl": "/docs/restic-win10-restore.html#resources"
+  },"89": {
+    "doc": "Start react native app in android emulator",
+    "title": "Start react native app in android emulator",
+    "content": "npx react-native run-android . Known errors: App already installed . npx react-native run-android ....... * What went wrong: Execution failed for task ':app:installDebug'. &gt; java.util.concurrent.ExecutionException: com.android.builder.testing.api.DeviceException: com.android.ddmlib.InstallException: INSTALL_FAILED_VERSION_DOWNGRADE . https://stackoverflow.com/a/13809076 . ",
+    "url": "/docs/run-react-native-app.html",
+    "relUrl": "/docs/run-react-native-app.html"
+  },"90": {
+    "doc": "SQL Cheatsheet",
+    "title": "SQL Cheatsheet",
+    "content": "Credit to twitter@AbzAaron . SQL cheatsheet . ",
+    "url": "/docs/cheatSheets/sql-AbzAaron.html",
+    "relUrl": "/docs/cheatSheets/sql-AbzAaron.html"
+  },"91": {
+    "doc": "SQL Cheatsheet",
+    "title": "Resources",
+    "content": ". | https://github.com/ABZ-Aaron/CheatSheets/blob/main/SQL-V2-Dark.pdf | . ",
+    "url": "/docs/cheatSheets/sql-AbzAaron.html#resources",
+    "relUrl": "/docs/cheatSheets/sql-AbzAaron.html#resources"
+  },"92": {
+    "doc": "Renew letsEncrypt",
+    "title": "Renew letsEncrypt",
+    "content": "Port 80 must be open . /usr/syno/sbin/syno-letsencrypt renew-all -v . ",
+    "url": "/docs/synology-letsEncrypt-renew-cli.html",
+    "relUrl": "/docs/synology-letsEncrypt-renew-cli.html"
+  },"93": {
+    "doc": "Renew letsEncrypt",
+    "title": "Resources",
+    "content": ". | https://osquestguides.com/blog/2017/05/30/manually-renewing-lets-encrypt-certificates-on-a-synology-nas-1/ | . ",
+    "url": "/docs/synology-letsEncrypt-renew-cli.html#resources",
+    "relUrl": "/docs/synology-letsEncrypt-renew-cli.html#resources"
+  },"94": {
+    "doc": "Paths on synology",
+    "title": "Paths on synology",
+    "content": ". | nano /usr/local/bin/nano | openvpn . | key files /var/packages/VPNCenter/target/etc/openvpn/keys/ | configuration files /usr/syno/etc/packages/VPNCenter/openvpn/ | . | user scripts /usr/local/bin | . ",
+    "url": "/docs/synology-paths.html",
+    "relUrl": "/docs/synology-paths.html"
+  },"95": {
+    "doc": "Commands for handling DSM Services",
+    "title": "Commands for handling DSM Services",
+    "content": "Note that you need elevated permissions to issue these commands, use sudo -i for simplicity. synoservicecfg –list synoservice –status synoservicecfg –stop &lt;service&gt; synoservicecfg –hard-stop &lt;service&gt; synoservicecfg –start &lt;service&gt; synoservicecfg –hard-start &lt;service&gt; synoservice –restart &lt;service&gt; synoservicectl –restart &lt;service&gt;[/code] . For example, this will restart WebStation altogether: . synoservice --restart pkgctl-WebStation . or Docker: . synoservice --restart pkgctl-Docker . ",
+    "url": "/docs/synology-services-cli.html",
+    "relUrl": "/docs/synology-services-cli.html"
+  },"96": {
+    "doc": "Commands for handling DSM Services",
+    "title": "Resources",
+    "content": ". | https://tech.setepontos.com/2018/03/25/control-synology-dsm-services-via-terminal-ssh/ | . ",
+    "url": "/docs/synology-services-cli.html#resources",
+    "relUrl": "/docs/synology-services-cli.html#resources"
+  },"97": {
+    "doc": "Tags",
+    "title": "Tags",
+    "content": ". | android | backup | bash | cheatSheet | chrome | cli | ConsoleApp | CSS | debug | devTools | docker | dotnet | efcore | encryption | fish | flatpak | git | gparted | html | InvoicePlane | iobroker | linux | markdown | moq | ngrok | node | nuget | proxmox | react | reactNative | record | registry | restic | shell | shortcut | smarthome | SQL | ssh | submodule | synology | thunderbolt | typescript | unitTest | VisualStudio | win | withSample | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"98": {
+    "doc": "Tags",
+    "title": "android",
+    "content": ". | Android debug bridge (adb) | URL to open chrome remote dev tools | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"99": {
+    "doc": "Tags",
+    "title": "backup",
+    "content": ". | restic - Restore using mount¶ | restic - Restore on Win 10 | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"100": {
+    "doc": "Tags",
+    "title": "bash",
+    "content": ". | Bash | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"101": {
+    "doc": "Tags",
+    "title": "cheatSheet",
+    "content": ". | Android debug bridge (adb) | Docker cli commands | Markdown smiley | Markdown cheatsheet | SQL Cheatsheet | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"102": {
+    "doc": "Tags",
+    "title": "chrome",
+    "content": ". | URL to open chrome remote dev tools | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"103": {
+    "doc": "Tags",
+    "title": "cli",
+    "content": ". | Android debug bridge (adb) | Encode and decode base64 | Docker cli commands | Remove a submodule | chmod - change file mode bits | Linux disk commands | grep, egrep, fgrep - print lines matching a pattern | scp - secure copy (remote file copy program) | ssh cli | ssh - OpenSSH SSH client (remote login program) | ngrok | nuget push / delete | install InvoicePlane in LXC | Commands for new Linux container | Start react native app in android emulator | Commands for handling DSM Services | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"104": {
+    "doc": "Tags",
+    "title": "ConsoleApp",
+    "content": ". | C# Console App with DI | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"105": {
+    "doc": "Tags",
+    "title": "CSS",
+    "content": ". | HTML nested list | Define a style in a component | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"106": {
+    "doc": "Tags",
+    "title": "debug",
+    "content": ". | Debug a nuget package | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"107": {
+    "doc": "Tags",
+    "title": "devTools",
+    "content": ". | URL to open chrome remote dev tools | ngrok | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"108": {
+    "doc": "Tags",
+    "title": "docker",
+    "content": ". | Docker cli commands | Enable insecure registry | Enable remote API for dockerd | Setup docker in docker | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"109": {
+    "doc": "Tags",
+    "title": "dotnet",
+    "content": ". | C# Console App with DI | Debug a nuget package | EfCore value converter for DateTime | dotnet and local nuget feed | Push a nuget package within a docker container | Record: Serialize/deserialize attributes using primary constructor | Verify a method call wit exact parameters | nuget push / delete | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"110": {
+    "doc": "Tags",
+    "title": "efcore",
+    "content": ". | EfCore value converter for DateTime | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"111": {
+    "doc": "Tags",
+    "title": "encryption",
+    "content": ". | Encode and decode base64 | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"112": {
+    "doc": "Tags",
+    "title": "fish",
+    "content": ". | Extend fish PATH | Switching to fish | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"113": {
+    "doc": "Tags",
+    "title": "flatpak",
+    "content": ". | Custom installation path 2 | Custom installation path | Install flatpak dbeaver extension | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"114": {
+    "doc": "Tags",
+    "title": "git",
+    "content": ". | Remove a submodule | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"115": {
+    "doc": "Tags",
+    "title": "gparted",
+    "content": ". | Move free space from end of the drive to first partition with gparted | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"116": {
+    "doc": "Tags",
+    "title": "html",
+    "content": ". | HTML nested list | Dropdown in react/typescript with html | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"117": {
+    "doc": "Tags",
+    "title": "InvoicePlane",
+    "content": ". | install InvoicePlane in LXC | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"118": {
+    "doc": "Tags",
+    "title": "iobroker",
+    "content": ". | Install iobroker with ConBee2 in debian virtual machine | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"119": {
+    "doc": "Tags",
+    "title": "linux",
+    "content": ". | Encode and decode base64 | Disable ssh root login | Bash | chmod - change file mode bits | Clean up linux | Linux disk commands | Custom installation path 2 | Custom installation path | Install flatpak dbeaver extension | grep, egrep, fgrep - print lines matching a pattern | Move free space from end of the drive to first partition with gparted | scp - secure copy (remote file copy program) | Extend fish PATH | Switching to fish | ssh cli | ssh - OpenSSH SSH client (remote login program) | Enable thunderbolt device on linux | restic - Restore using mount¶ | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"120": {
+    "doc": "Tags",
+    "title": "markdown",
+    "content": ". | Markdown smiley | Markdown cheatsheet | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"121": {
+    "doc": "Tags",
+    "title": "moq",
+    "content": ". | Verify a method call wit exact parameters | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"122": {
+    "doc": "Tags",
+    "title": "ngrok",
+    "content": ". | ngrok | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"123": {
+    "doc": "Tags",
+    "title": "node",
+    "content": ". | Handle node versions [win 10] | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"124": {
+    "doc": "Tags",
+    "title": "nuget",
+    "content": ". | Debug a nuget package | dotnet and local nuget feed | Push a nuget package within a docker container | nuget push / delete | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"125": {
+    "doc": "Tags",
+    "title": "proxmox",
+    "content": ". | Install iobroker with ConBee2 in debian virtual machine | install InvoicePlane in LXC | Commands for new Linux container | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"126": {
+    "doc": "Tags",
+    "title": "react",
+    "content": ". | Start react native app in android emulator | Define a style in a component | Dropdown in react/typescript with html | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"127": {
+    "doc": "Tags",
+    "title": "reactNative",
+    "content": ". | Start react native app in android emulator | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"128": {
+    "doc": "Tags",
+    "title": "record",
+    "content": ". | Record: Serialize/deserialize attributes using primary constructor | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"129": {
+    "doc": "Tags",
+    "title": "registry",
+    "content": ". | Enable insecure registry | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"130": {
+    "doc": "Tags",
+    "title": "restic",
+    "content": ". | restic - Restore using mount¶ | restic - Restore on Win 10 | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"131": {
+    "doc": "Tags",
+    "title": "shell",
+    "content": ". | Extend fish PATH | Switching to fish | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"132": {
+    "doc": "Tags",
+    "title": "shortcut",
+    "content": ". | Name of often used visual studio commands / shortcuts | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"133": {
+    "doc": "Tags",
+    "title": "smarthome",
+    "content": ". | Install iobroker with ConBee2 in debian virtual machine | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"134": {
+    "doc": "Tags",
+    "title": "SQL",
+    "content": ". | SQL Cheatsheet | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"135": {
+    "doc": "Tags",
+    "title": "ssh",
+    "content": ". | Disable ssh root login | ssh cli | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"136": {
+    "doc": "Tags",
+    "title": "submodule",
+    "content": ". | Remove a submodule | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"137": {
+    "doc": "Tags",
+    "title": "synology",
+    "content": ". | Renew letsEncrypt | Paths on synology | Commands for handling DSM Services | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"138": {
+    "doc": "Tags",
+    "title": "thunderbolt",
+    "content": ". | Enable thunderbolt device on linux | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"139": {
+    "doc": "Tags",
+    "title": "typescript",
+    "content": ". | Define a style in a component | Dropdown in react/typescript with html | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"140": {
+    "doc": "Tags",
+    "title": "unitTest",
+    "content": ". | Verify a method call wit exact parameters | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"141": {
+    "doc": "Tags",
+    "title": "VisualStudio",
+    "content": ". | Name of often used visual studio commands / shortcuts | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"142": {
+    "doc": "Tags",
+    "title": "win",
+    "content": ". | Handle node versions [win 10] | restic - Restore on Win 10 | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"143": {
+    "doc": "Tags",
+    "title": "withSample",
+    "content": ". | C# Console App with DI | Record: Serialize/deserialize attributes using primary constructor | . ",
+    "url": "/tags.html",
+    "relUrl": "/tags.html"
+  },"144": {
+    "doc": "Define a style in a component",
+    "title": "Define a style in a component",
+    "content": "const dropdownStyle: CSSProperties = { width: 80, marginLeft: 10, marginRight: 20, height: 40 }; // store multiple css styles export interface StylesDictionary{ [Key: string]: CSSProperties; } . &lt;select id='dropdown' style={dropdownStyle}&gt; . ",
+    "url": "/docs/typescript-CSS-react.html",
+    "relUrl": "/docs/typescript-CSS-react.html"
+  },"145": {
+    "doc": "Dropdown in react/typescript with html",
+    "title": "Dropdown in react/typescript with html",
+    "content": "const style: CSSProperties = { width: 80, marginLeft: 10, marginRight: 20, height: 40 }; interface DropdownOption { key:string, text:string, value: string } const options: DropdownOption[] = [ { key: '10', text: '10', value: '10' }, { key: '25', text: '25', value: '25' } ] const handleOnChange= (event: ChangeEvent&lt;HTMLSelectElement&gt;) =&gt; { console.log(event.target.value) } . &lt;select id='dropdown' onChange={handleOnChange} style={style}&gt; { options.map(item =&gt; { return &lt;option value={item.value} key={item.key}&gt; {item.text}&lt;/option&gt; }) } &lt;/select&gt; . ",
+    "url": "/docs/typescript-react-html-select.html",
+    "relUrl": "/docs/typescript-react-html-select.html"
+  },"146": {
+    "doc": "Name of often used visual studio commands / shortcuts",
+    "title": "Name of often used visual studio commands / shortcuts",
+    "content": "Edit.NextMethod Edit.PreviousMethod Window.NewVerticalTabGroup Window.MovetoNextTabGroup Window.MovetoPreviousTabGroup # Move method up ReSharper.ReSharper_MoveUp # Move method down ReSharper.ReSharper_MoveDown . ",
+    "url": "/docs/visualStudio-shortcuts.html",
+    "relUrl": "/docs/visualStudio-shortcuts.html"
+  }
+}
